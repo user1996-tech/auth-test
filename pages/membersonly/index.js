@@ -1,6 +1,6 @@
 import React from "react";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { useUser as UseUser } from "@auth0/nextjs-auth0/client";
 import Head from "next/head";
 import NavBar from "../../components/NavBar";
 
@@ -13,7 +13,7 @@ export const getServerSideProps = withPageAuthRequired({
 
 const index = ({ headers }) => {
   console.log(headers);
-  const { user, error, isLoading } = useUser();
+  const { user, error, isLoading } = UseUser();
   return (
     <div>
       <Head>
