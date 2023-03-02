@@ -5,6 +5,13 @@ const nextConfig = {
   images: {
     domains: ["s.gravatar.com"],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  i18n: {
+    locales: ["en"],
+    defaultLocale: "en",
+  },
 };
 
 module.exports = nextConfig;

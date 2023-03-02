@@ -6,7 +6,7 @@ import NavBar from "../components/NavBar";
 import { useEffect } from "react";
 import { db } from "../firebase/clientApp";
 import { doc, addDoc, collection } from "firebase/firestore";
-import moment from "moment";
+import moment from "moment-timezone";
 
 const generateRandomIP = () => {
   const ip =
@@ -27,8 +27,10 @@ export const getServerSideProps = async () => {
   const dbRef = collection(db, "visitors");
   // get ip from headers here
   const ip = generateRandomIP();
-  const currentTime = moment().utc();
+  const currentTime = moment().utc().format();
+  const currentTimeStamp = Date.now();
   data = {
+    createdAt: currentTimeStamp,
     ip: ip,
     dateTime: currentTime,
     // region: "region"
@@ -36,13 +38,18 @@ export const getServerSideProps = async () => {
   };
   const res = await addDoc(dbRef, data);
 
-  return { props: { data: data, res: res.id } };
+  return { props: { data: data, res: currentTime } };
 };
 
 export default function Home({ data, res }) {
-  console.log(res);
   // const { user, error, isLoading } = useUser();
-  console.log(data);
+  // const testDate = moment().utc().format();
+  // console.log("current Timezone");
+  // console.log(moment(testDate).tz("Australia/Melbourne").format("LLLL"));
+  // console.log("change Timezone");
+  // const newTimezone = moment(testDate).tz("Atlantic/Reykjavik").format("LLLL");
+  // console.log(newTimezone);
+  console.log(res);
 
   return (
     <div>

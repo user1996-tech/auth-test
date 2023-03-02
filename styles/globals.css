@@ -19,7 +19,7 @@
 }
 
 .tableBody {
-  @apply text-[27px] font-semibold text-[#656565];
+  @apply text-[23px] md:text-[27px] font-semibold text-[#656565];
 }
 
 .tableBodyDataRow {
