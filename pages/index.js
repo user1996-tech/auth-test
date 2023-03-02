@@ -22,26 +22,37 @@ const generateRandomIP = () => {
   return ip;
 };
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async ({ req }) => {
   let data = {};
   const dbRef = collection(db, "visitors");
   // get ip from headers here
-  const ip = generateRandomIP();
+  // const ip = generateRandomIP();
   const currentTime = moment().utc().format();
   const currentTimeStamp = Date.now();
-  data = {
-    createdAt: currentTimeStamp,
-    ip: ip,
-    dateTime: currentTime,
-    // region: "region"
-    // device: "device"
-  };
-  const res = await addDoc(dbRef, data);
 
-  return { props: { data: data, res: currentTime } };
+  let ip = req.headers["x-real-ip"];
+  if (!ip) {
+    const forwardedFor = req.headers["x-forwarded-for"];
+    if (Array.isArray(forwardedFor)) {
+      ip = forwardedFor.at(0);
+    } else {
+      ip = forwardedFor?.split(",").at(0) ?? "Unknown";
+    }
+  }
+
+  // data = {
+  //   createdAt: currentTimeStamp,
+  //   // ip: ip,
+  //   dateTime: currentTime,
+  //   // region: "region"
+  //   // device: "device"
+  // };
+  // const res = await addDoc(dbRef, data);
+
+  return { props: { res: JSON.stringify(req.headers), ip: ip } };
 };
 
-export default function Home({ data, res }) {
+export default function Home({ res, ip }) {
   // const { user, error, isLoading } = useUser();
   // const testDate = moment().utc().format();
   // console.log("current Timezone");
@@ -49,7 +60,10 @@ export default function Home({ data, res }) {
   // console.log("change Timezone");
   // const newTimezone = moment(testDate).tz("Atlantic/Reykjavik").format("LLLL");
   // console.log(newTimezone);
-  console.log(res);
+  console.log("res");
+  console.log(JSON.parse(res));
+  console.log("ip");
+  console.log(ip);
 
   return (
     <div>

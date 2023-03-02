@@ -60,7 +60,7 @@ const index = ({ headers, jsonData }) => {
       q = query(
         collection(db, "visitors"),
         orderBy("createdAt", "desc"),
-        // limit(count),
+        limit(count),
         endBefore(firstVisible)
       );
       console.log("inside previous firstVisible");
@@ -151,7 +151,7 @@ const index = ({ headers, jsonData }) => {
       const q = query(
         collection(db, "visitors"),
         orderBy("createdAt", "desc"),
-        limit(count)
+        limit(50)
       );
       const data = await getDocs(q);
       data.forEach((doc) => {
@@ -258,7 +258,7 @@ const index = ({ headers, jsonData }) => {
             )}
           </table>
 
-          <div className="flex flex-row justify-center space-x-5">
+          {/* <div className="flex flex-row justify-center space-x-5">
             <div
               className={`cursor-pointer rounded-lg py-2 px-4 border-2 ${
                 previousEnabled
@@ -287,82 +287,8 @@ const index = ({ headers, jsonData }) => {
             >
               Next
             </div>
-          </div>
+          </div> */}
         </div>
-
-        {/* <div className="max-w-6xl mx-auto my-10">
-          <div className="py-2">
-            <p className="text-2xl font-semibold">Iceland Time</p>
-          </div>
-
-          <table className="table">
-            <thead className="tableHeader">
-              <tr className="tableHeaderRow">
-                <th className="tableHeaderData">No</th>
-                <th className="tableHeaderData">IP address</th>
-                <th className="tableHeaderData">Time and date</th>
-                <th className="tableHeaderData">Region</th>
-              </tr>
-            </thead>
-            {loading ? (
-              <div className="">Loading ... </div>
-            ) : (
-              <tbody className="tableBody">
-                {rows.map((doc, index) => {
-                  return (
-                    <tr className="tableBodyDataRow">
-                      <td className="tableBodyData">{index}</td>
-                      <td className="tableBodyData">{doc.ip}</td>
-                      <td className="tableBodyData">
-                        {moment(doc.dateTime)
-                          .tz("Atlantic/Reykjavik")
-                          .format("LLLL")}
-                      </td>
-                      <td className="tableBodyData">Iceland</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            )}
-          </table>
-        </div> */}
-
-        {/* <div className="max-w-6xl mx-auto my-10">
-          <div className="py-2">
-            <p className="text-2xl font-semibold">Singapore Time</p>
-          </div>
-
-          <table className="table">
-            <thead className="tableHeader">
-              <tr className="tableHeaderRow">
-                <th className="tableHeaderData">No</th>
-                <th className="tableHeaderData">IP address</th>
-                <th className="tableHeaderData">Time and date</th>
-                <th className="tableHeaderData">Region</th>
-              </tr>
-            </thead>
-            {loading ? (
-              <div className="">Loading ... </div>
-            ) : (
-              <tbody className="tableBody">
-                {rows.map((doc, index) => {
-                  return (
-                    <tr className="tableBodyDataRow">
-                      <td className="tableBodyData">{index}</td>
-                      <td className="tableBodyData">{doc.ip}</td>
-                      <td className="tableBodyData">
-                        {moment(doc.dateTime)
-                          .tz("Asia/Singapore")
-                          .format("LLLL")}
-                      </td>
-                      <td className="tableBodyData">Singapore</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            )}
-          </table>
-        </div> */}
       </div>
     </div>
   );
