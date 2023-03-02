@@ -29,11 +29,20 @@ export const getServerSideProps = async ({ req }) => {
   // const ip = generateRandomIP();
   const currentTime = moment().utc().format();
   const currentTimeStamp = Date.now();
+  const mobile = req.headers["user-agent"].match(
+    /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+  )
+    ? true
+    : false;
 
-  // const mobile = req.headers["user-agent"].match(
-  //   /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
-  // );
-  const mobile = req.headers["user-agent"];
+  let platform = "";
+  if (req.headers["user-agent"].match(/Windows/i)) {
+    platform = "Windows";
+  } else if (req.headers["user-agent"].match(/Macintosh/i)) {
+    platform = "Mac";
+  } else if (req.headers["user-agent"].match(/Linux/i)) {
+    platform = "Linux";
+  }
 
   const country = req?.headers["x-vercel-ip-country"]
     ? req.headers["x-vercel-ip-country"]
@@ -70,6 +79,7 @@ export const getServerSideProps = async ({ req }) => {
     region: region,
     longitude: longitude,
     latitude: latitude,
+    platform: platform,
     // device: "device"
   };
   const res = await addDoc(dbRef, data);
@@ -79,7 +89,7 @@ export const getServerSideProps = async ({ req }) => {
   };
 };
 
-export default function Home({ res, ip }) {
+export default function Home({ res, ip, mobile }) {
   // const { user, error, isLoading } = useUser();
   // const testDate = moment().utc().format();
   // console.log("current Timezone");
