@@ -30,6 +30,26 @@ export const getServerSideProps = async ({ req }) => {
   const currentTime = moment().utc().format();
   const currentTimeStamp = Date.now();
 
+  const mobile = req.headers["user-agent"].match(
+    /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+  );
+
+  const country = req?.headers["x-vercel-ip-country"]
+    ? req.headers["x-vercel-ip-country"]
+    : "";
+  const city = req?.headers["x-vercel-ip-city"]
+    ? req.headers["x-vercel-ip-city"]
+    : "";
+  const region = req?.headers["x-vercel-ip-country-region"]
+    ? req.headers["x-vercel-ip-country-region"]
+    : "";
+  const longitude = req?.headers["x-vercel-ip-longitude"]
+    ? req.headers["x-vercel-ip-longitude"]
+    : "";
+  const latitude = req?.headers["x-vercel-ip-latitude"]
+    ? req.headers["x-vercel-ip-latitude"]
+    : "";
+
   let ip = req.headers["x-real-ip"];
   if (!ip) {
     const forwardedFor = req.headers["x-forwarded-for"];
@@ -40,16 +60,23 @@ export const getServerSideProps = async ({ req }) => {
     }
   }
 
-  // data = {
-  //   createdAt: currentTimeStamp,
-  //   // ip: ip,
-  //   dateTime: currentTime,
-  //   // region: "region"
-  //   // device: "device"
-  // };
-  // const res = await addDoc(dbRef, data);
+  data = {
+    createdAt: currentTimeStamp,
+    ip: ip,
+    dateTime: currentTime,
+    country: country,
+    city: city,
+    region: region,
+    longitude: longitude,
+    latitude,
+    latitude,
+    // device: "device"
+  };
+  const res = await addDoc(dbRef, data);
 
-  return { props: { res: JSON.stringify(req.headers), ip: ip } };
+  return {
+    props: { res: JSON.stringify(req.headers), ip: ip, mobile: mobile },
+  };
 };
 
 export default function Home({ res, ip }) {
@@ -64,6 +91,8 @@ export default function Home({ res, ip }) {
   console.log(JSON.parse(res));
   console.log("ip");
   console.log(ip);
+  console.log("mobile");
+  console.log(mobile);
 
   return (
     <div>
