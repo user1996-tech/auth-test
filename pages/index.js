@@ -82,15 +82,19 @@ export const getServerSideProps = async ({ req }) => {
     mobile: mobile,
     platform: platform,
   };
-  const res = await addDoc(dbRef, data);
+
+  if (req.headers["host"] != "localhost:3000") {
+    const res = await addDoc(dbRef, data);
+  }
 
   return {
-    props: { data },
+    props: { data: data, headers: req.headers },
   };
 };
 
-export default function Home({ data }) {
+export default function Home({ data, headers }) {
   console.log(data);
+  console.log(headers);
 
   return (
     <div>

@@ -151,10 +151,10 @@ const index = ({ headers, jsonData }) => {
       result = "";
     } else if (country != "") {
       if (countryCodes[country]) {
-        result += countryCodes[country];
+        result += decodeURI(countryCodes[country]);
 
         if (region != "") {
-          result += ` / ${region}`;
+          result += ` / ${decodeURI(region)}`;
         }
       } else {
         result = "";
