@@ -15,11 +15,11 @@
 }
 
 .tableHeaderData {
-  @apply border-b-2 border-[#b0b0b0] py-2 cursor-pointer hover:text-[#656565];
+  @apply border-b-2 border-[#b0b0b0] py-2;
 }
 
 .tableBody {
-  @apply text-[23px] md:text-[27px] font-semibold text-[#656565];
+  @apply text-[23px]   text-[#656565];
 }
 
 .tableBodyDataRow {

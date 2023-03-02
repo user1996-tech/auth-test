@@ -15,6 +15,7 @@ import {
   endBefore,
 } from "firebase/firestore";
 import moment from "moment-timezone";
+import countryCodes from "../../components/countryCodes";
 
 const timezones = [
   { id: 1, title: "Australia", timezone: "Australia/Melbourne" },
@@ -144,6 +145,29 @@ const index = ({ headers, jsonData }) => {
     }
   };
 
+  const generateRegion = (country, region) => {
+    let result = "";
+    if (country == "" && region == "") {
+      result = "";
+    } else if (country != "") {
+      if (countryCodes[country]) {
+        result += countryCodes[country];
+
+        if (region != "") {
+          result += ` / ${region}`;
+        }
+      } else {
+        result = "";
+      }
+    }
+
+    if (result == "") {
+      return "Unknown";
+    } else {
+      return result;
+    }
+  };
+
   useEffect(() => {
     const run = async () => {
       setLoading(true);
@@ -250,7 +274,9 @@ const index = ({ headers, jsonData }) => {
                           .tz(timezones[selected].timezone)
                           .format("Do MMM YYYY HH:mm")}
                       </td>
-                      <td className="tableBodyData">Australia</td>
+                      <td className="tableBodyData">
+                        {generateRegion(doc.country, doc.city)}
+                      </td>
                     </tr>
                   );
                 })}

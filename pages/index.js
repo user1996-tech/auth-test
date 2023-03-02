@@ -79,30 +79,18 @@ export const getServerSideProps = async ({ req }) => {
     region: region,
     longitude: longitude,
     latitude: latitude,
+    mobile: mobile,
     platform: platform,
-    // device: "device"
   };
   const res = await addDoc(dbRef, data);
 
   return {
-    props: { res: JSON.stringify(req.headers), ip: ip, mobile: mobile },
+    props: { data },
   };
 };
 
-export default function Home({ res, ip, mobile }) {
-  // const { user, error, isLoading } = useUser();
-  // const testDate = moment().utc().format();
-  // console.log("current Timezone");
-  // console.log(moment(testDate).tz("Australia/Melbourne").format("LLLL"));
-  // console.log("change Timezone");
-  // const newTimezone = moment(testDate).tz("Atlantic/Reykjavik").format("LLLL");
-  // console.log(newTimezone);
-  console.log("res");
-  console.log(JSON.parse(res));
-  console.log("ip");
-  console.log(ip);
-  console.log("mobile");
-  console.log(mobile);
+export default function Home({ data }) {
+  console.log(data);
 
   return (
     <div>
