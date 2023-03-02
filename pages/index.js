@@ -22,6 +22,8 @@ const generateRandomIP = () => {
   return ip;
 };
 
+const buildAddresses = ["27.199.112.219", "143.198.128.218", "172.71.158.32"];
+
 export const getServerSideProps = async ({ req }) => {
   let data = {};
   const dbRef = collection(db, "visitors");
@@ -84,7 +86,9 @@ export const getServerSideProps = async ({ req }) => {
   };
 
   if (req.headers["host"] != "localhost:3000") {
-    const res = await addDoc(dbRef, data);
+    if (!buildAddresses.includes(ip)) {
+      const res = await addDoc(dbRef, data);
+    }
   }
 
   return {
