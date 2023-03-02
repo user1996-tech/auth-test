@@ -30,9 +30,10 @@ export const getServerSideProps = async ({ req }) => {
   const currentTime = moment().utc().format();
   const currentTimeStamp = Date.now();
 
-  const mobile = req.headers["user-agent"].match(
-    /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
-  );
+  // const mobile = req.headers["user-agent"].match(
+  //   /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+  // );
+  const mobile = req.headers["user-agent"];
 
   const country = req?.headers["x-vercel-ip-country"]
     ? req.headers["x-vercel-ip-country"]
@@ -68,8 +69,7 @@ export const getServerSideProps = async ({ req }) => {
     city: city,
     region: region,
     longitude: longitude,
-    latitude,
-    latitude,
+    latitude: latitude,
     // device: "device"
   };
   const res = await addDoc(dbRef, data);
