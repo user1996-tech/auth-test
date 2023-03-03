@@ -92,14 +92,11 @@ export const getServerSideProps = async ({ req }) => {
   }
 
   return {
-    props: { data: data, headers: req.headers },
+    props: {},
   };
 };
 
-export default function Home({ data, headers }) {
-  console.log(data);
-  console.log(headers);
-
+export default function Home({}) {
   return (
     <div>
       <Head>
@@ -109,7 +106,6 @@ export default function Home({ data, headers }) {
       </Head>
 
       <div>
-        <NavBar />
         <main className={styles.main}>
           <h1 className={styles.title}>
             Welcome to <a href="https://nextjs.org">Next.js!</a>

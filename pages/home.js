@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { useUser as UseUser } from "@auth0/nextjs-auth0/client";
 import Head from "next/head";
-import NavBar from "../../components/NavBar";
-import { db } from "../../firebase/clientApp";
+import NavBar from "../components/NavBar";
+import { db } from "../firebase/clientApp";
 import {
   collection,
   query,
@@ -15,11 +15,11 @@ import {
   endBefore,
 } from "firebase/firestore";
 import moment from "moment-timezone";
-import { generateRegion, timezones } from "../../global";
+import { generateRegion, timezones } from "../global";
 
 export const getServerSideProps = withPageAuthRequired();
 
-const index = ({ headers, jsonData }) => {
+const home = ({ headers, jsonData }) => {
   const count = 50;
   const { user, error, isLoading } = UseUser();
   const [selected, setSelected] = useState(0);
@@ -136,4 +136,4 @@ const index = ({ headers, jsonData }) => {
   );
 };
 
-export default index;
+export default home;
